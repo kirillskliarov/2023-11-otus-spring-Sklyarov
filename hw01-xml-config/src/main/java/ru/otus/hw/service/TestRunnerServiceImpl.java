@@ -11,7 +11,7 @@ public class TestRunnerServiceImpl implements TestRunnerService {
     private final TestService testService;
 
     @Override
-    public void run() throws IOException, CsvException {
+    public void run() {
         testService.executeTest();
     }
 }

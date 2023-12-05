@@ -13,7 +13,7 @@ public class TestServiceImpl implements TestService {
     private final QuestionDao questionDao;
 
     @Override
-    public void executeTest() throws IOException, CsvException {
+    public void executeTest() {
         ioService.printLine("");
         ioService.printFormattedLine("Please answer the questions below%n");
         questionDao.findAll().forEach(question -> {
