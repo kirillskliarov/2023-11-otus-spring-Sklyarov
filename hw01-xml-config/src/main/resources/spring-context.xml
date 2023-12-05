@@ -14,6 +14,8 @@
     <bean id="testService" class="ru.otus.hw.service.TestServiceImpl">
         <constructor-arg index="0" ref="ioService">
         </constructor-arg>
+        <constructor-arg index="1" ref="questionDao">
+        </constructor-arg>
     </bean>
     <bean id="testRunnerService" class="ru.otus.hw.service.TestRunnerServiceImpl">
         <constructor-arg index="0" ref="testService">
@@ -26,6 +28,10 @@
     <bean id="questionDao" class="ru.otus.hw.dao.CsvQuestionDao">
         <constructor-arg index="0" ref="testFileNameProvider">
         </constructor-arg>
+    </bean>
+    <bean id="csvToBean" class="com.opencsv.bean.CsvToBean">
+<!--        <constructor-arg index="0" ref="testFileNameProvider">-->
+<!--        </constructor-arg>-->
     </bean>
 
 </beans>
