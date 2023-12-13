@@ -1,5 +1,20 @@
+### IntelliJ IDEA ###
 .idea
+*.iws
 *.iml
+*.ipr
+
+
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
 # Compiled class file
 *.class
 
@@ -44,6 +59,7 @@ bin/
 
 ### NetBeans ###
 /nbproject/private/
+/build/
 /nbbuild/
 /dist/
 /nbdist/
@@ -56,3 +72,4 @@ bin/
 .DS_Store
 
 */target/
+*/dependency-reduced-pom.xml
