@@ -10,11 +10,9 @@ import org.springframework.context.annotation.PropertySource;
 @PropertySource("classpath:application.properties")
 public class AppProperties implements TestConfig, TestFileNameProvider {
 
-    // внедрить свойство из application.properties
     @Value("${test.rightAnswersCountToPass:0}")
     private int rightAnswersCountToPass;
 
-    // внедрить свойство из application.properties
     @Value("${test.fileName:''}")
     private String testFileName;
 
