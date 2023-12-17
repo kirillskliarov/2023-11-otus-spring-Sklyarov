@@ -23,6 +23,11 @@ public class StreamsIOService implements IOService {
     }
 
     @Override
+    public void printLine() {
+        printStream.println();
+    }
+
+    @Override
     public void printLine(String s) {
         printStream.println(s);
     }
@@ -38,8 +43,8 @@ public class StreamsIOService implements IOService {
     }
 
     @Override
-    public String readStringWithPrompt(String prompt) {
-        printLine(prompt);
+    public String readStringWithPrompt(String prompt, Object... args) {
+        printFormattedLine(prompt, args);
         return scanner.nextLine();
     }
 
