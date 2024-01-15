@@ -23,13 +23,13 @@ public class StreamsIOService implements IOService {
     }
 
     @Override
-    public void printLine() {
-        printStream.println();
+    public void printLine(String s) {
+        printStream.println(s);
     }
 
     @Override
-    public void printLine(String s) {
-        printStream.println(s);
+    public void printLine() {
+        printStream.println();
     }
 
     @Override

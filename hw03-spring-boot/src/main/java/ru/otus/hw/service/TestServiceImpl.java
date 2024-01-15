@@ -7,28 +7,32 @@ import ru.otus.hw.domain.Question;
 import ru.otus.hw.domain.Student;
 import ru.otus.hw.domain.TestResult;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class TestServiceImpl implements TestService {
 
-    private final IOService ioService;
+    private final LocalizedIOService ioService;
 
     private final QuestionDao questionDao;
 
     @Override
     public TestResult executeTestFor(Student student) {
         ioService.printLine("");
-        ioService.printFormattedLine("Please answer the questions below%n");
+        ioService.printLineLocalized("TestService.answer.the.questions");
+        ioService.printLine("");
+
         var questions = questionDao.findAll();
         var testResult = new TestResult(student);
 
         for (var question : questions) {
             var isAnswerValid = this.askQuestion(question);
             testResult.applyAnswer(question, isAnswerValid);
-            ioService.printLine();
+            ioService.printLine("");
         }
         return testResult;
     }
+
+
 
     private boolean askQuestion(Question question) {
         var questionText = question.text();
@@ -68,4 +72,5 @@ public class TestServiceImpl implements TestService {
     private void showCaution() {
         ioService.printLine("Answer is not valid");
     }
+
 }

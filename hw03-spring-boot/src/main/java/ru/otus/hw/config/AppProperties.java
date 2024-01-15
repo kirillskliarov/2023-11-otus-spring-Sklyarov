@@ -13,14 +13,8 @@ import java.util.Locale;
 import java.util.Map;
 
 @Setter
-//@Configuration
-//@PropertySource("classpath:application.yml")
 @ConfigurationProperties(prefix = "test")
-//@PropertySource("application.yml")
-//@EnableConfigurationProperties
-//@EnableAutoConfiguration
 public class AppProperties implements TestConfig, TestFileNameProvider, LocaleConfig {
-
     @Getter
     private int rightAnswersCountToPass;
 
@@ -29,27 +23,12 @@ public class AppProperties implements TestConfig, TestFileNameProvider, LocaleCo
 
     private Map<String, String> fileNameByLocaleTag;
 
-    AppProperties(
-            int rightAnswersCountToPass,
-            String locale,
-            Map<String, String> fileNameByLocaleTag
-    ) {
-
-        this.rightAnswersCountToPass = rightAnswersCountToPass;
+    public void setLocale(String locale) {
         this.locale = Locale.forLanguageTag(locale);
-        this.fileNameByLocaleTag = fileNameByLocaleTag;
-        System.out.println(this.locale.toLanguageTag());
-
     }
-
-//    public void setLocale(String locale) {
-//        System.out.println(locale);
-//        System.out.println(this.locale);
-//        this.locale = Locale.forLanguageTag(locale);
-//    }
 
     @Override
     public String getTestFileName() {
-        return fileNameByLocaleTag.get(this.locale.toLanguageTag());
+        return fileNameByLocaleTag.get(locale.toLanguageTag());
     }
 }
