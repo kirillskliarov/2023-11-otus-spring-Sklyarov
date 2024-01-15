@@ -5,29 +5,26 @@ import org.springframework.stereotype.Service;
 import ru.otus.hw.config.TestConfig;
 import ru.otus.hw.domain.TestResult;
 
-@Service
 @RequiredArgsConstructor
+@Service
 public class ResultServiceImpl implements ResultService {
 
     private final TestConfig testConfig;
 
-    private final LocalizedIOService ioService;
+    private final IOService ioService;
 
     @Override
     public void showResult(TestResult testResult) {
         ioService.printLine("");
-        ioService.printLineLocalized("ResultService.test.results");
-        ioService.printFormattedLineLocalized("ResultService.student",
-                testResult.getStudent().getFullName());
-        ioService.printFormattedLineLocalized("ResultService.answered.questions.count",
-                testResult.getAnsweredQuestions().size());
-        ioService.printFormattedLineLocalized("ResultService.right.answers.count",
-                testResult.getRightAnswersCount());
+        ioService.printLine("Test results: ");
+        ioService.printFormattedLine("Student: %s", testResult.getStudent().getFullName());
+        ioService.printFormattedLine("Answered questions count: %d", testResult.getAnsweredQuestions().size());
+        ioService.printFormattedLine("Right answers count: %d", testResult.getRightAnswersCount());
 
         if (testResult.getRightAnswersCount() >= testConfig.getRightAnswersCountToPass()) {
-            ioService.printLineLocalized("ResultService.passed.test");
+            ioService.printLine("Congratulations! You passed test!");
             return;
         }
-        ioService.printLineLocalized("ResultService.fail.test");
+        ioService.printLine("Sorry. You fail test.");
     }
 }
