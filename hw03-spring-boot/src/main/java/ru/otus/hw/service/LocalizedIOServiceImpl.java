@@ -63,6 +63,13 @@ public class LocalizedIOServiceImpl implements LocalizedIOService {
     }
 
     @Override
+    public String readStringWithFormattedPromptLocalized(String promptCode, Object ...args) {
+        ioService.printFormattedLine(localizedMessagesService.getMessage(promptCode, args));
+        return ioService.readString();
+    }
+
+
+    @Override
     public int readIntForRangeLocalized(int min, int max, String errorMessageCode) {
         return ioService.readIntForRange(min, max, localizedMessagesService.getMessage(errorMessageCode));
     }

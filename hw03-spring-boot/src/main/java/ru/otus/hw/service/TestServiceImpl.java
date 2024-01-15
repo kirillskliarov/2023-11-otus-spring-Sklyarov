@@ -19,7 +19,7 @@ public class TestServiceImpl implements TestService {
     public TestResult executeTestFor(Student student) {
         ioService.printLine("");
         ioService.printLineLocalized("TestService.answer.the.questions");
-        ioService.printLine("");
+        ioService.printLine();
 
         var questions = questionDao.findAll();
         var testResult = new TestResult(student);
@@ -27,7 +27,7 @@ public class TestServiceImpl implements TestService {
         for (var question : questions) {
             var isAnswerValid = this.askQuestion(question);
             testResult.applyAnswer(question, isAnswerValid);
-            ioService.printLine("");
+            ioService.printLine();
         }
         return testResult;
     }
@@ -56,7 +56,7 @@ public class TestServiceImpl implements TestService {
         do {
             try {
                 var userAnswer = ioService
-                        .readStringWithPrompt("Enter answer's number from %d to %d", 1, maxAnswerIndex);
+                        .readStringWithFormattedPromptLocalized("TestService.enter.the.answer", 1, maxAnswerIndex);
                 parsedAnswer = Integer.parseInt(userAnswer);
                 if (parsedAnswer <= 0 || parsedAnswer > maxAnswerIndex) {
                     showCaution();
@@ -70,7 +70,7 @@ public class TestServiceImpl implements TestService {
     }
 
     private void showCaution() {
-        ioService.printLine("Answer is not valid");
+        ioService.printLineLocalized("TestService.answer.is.incorrect");
     }
 
 }
