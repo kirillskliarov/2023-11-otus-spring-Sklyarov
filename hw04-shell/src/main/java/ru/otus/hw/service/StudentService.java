@@ -6,5 +6,5 @@ public interface StudentService {
 
     Student createStudent(String firstName, String lastName);
 
-    Student determineCurrentStudent();
+    Student getCurrentStudent();
 }

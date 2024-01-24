@@ -1,6 +1,5 @@
 package ru.otus.hw.service;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.otus.hw.domain.Student;
 
@@ -15,7 +14,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student determineCurrentStudent() {
+    public Student getCurrentStudent() {
         return currentStudent;
     }
 }

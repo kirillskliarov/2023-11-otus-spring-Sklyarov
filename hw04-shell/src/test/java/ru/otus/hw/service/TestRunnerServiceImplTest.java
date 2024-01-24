@@ -29,7 +29,7 @@ public class TestRunnerServiceImplTest {
 
     @Test
     public void run() {
-        Mockito.when(studentService.determineCurrentStudent()).thenReturn(student);
+        Mockito.when(studentService.getCurrentStudent()).thenReturn(student);
         testRunnerService.run();
 
         verify(testService, times(1)).executeTestFor(student);
