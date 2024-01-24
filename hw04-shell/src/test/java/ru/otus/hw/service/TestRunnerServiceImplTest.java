@@ -2,30 +2,32 @@ package ru.otus.hw.service;
 
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import ru.otus.hw.domain.Student;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import org.springframework.boot.test.context.SpringBootTest;
 
-@RequiredArgsConstructor
+@DisplayName("Should run test")
+@SpringBootTest(properties = "spring.shell.interactive.enabled=false")
 public class TestRunnerServiceImplTest {
-    private final TestService testService = mock(TestService.class);
-
-    private final StudentService studentService = mock(StudentService.class);
-
-    private final ResultService resultService = mock(ResultService.class);
-
     private final Student student = new Student("Ivan", "Ivanov");
 
-    private TestRunnerService testRunnerService;
-
-    @BeforeEach
-    public void init() {
-        testRunnerService = new TestRunnerServiceImpl(testService, studentService, resultService);
-    }
+    @MockBean
+    private TestService testService;
+    @SpyBean
+    private StudentService studentService;
+    @MockBean
+    private ResultService resultService;
+    @Autowired
+    private TestRunnerServiceImpl testRunnerService;
 
     @Test
     public void run() {
