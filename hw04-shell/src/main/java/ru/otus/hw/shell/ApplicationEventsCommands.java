@@ -13,6 +13,7 @@ import ru.otus.hw.service.TestRunnerService;
 @RequiredArgsConstructor
 public class ApplicationEventsCommands {
     private final StudentService studentService;
+
     private final TestRunnerService testRunnerService;
 
     @ShellMethod(value = "Enter fist name and last name", key = {"l", "login"})
@@ -31,6 +32,8 @@ public class ApplicationEventsCommands {
     }
 
     private Availability isRunCommandAvailable() {
-        return studentService.getCurrentStudent() == null ? Availability.unavailable("Сначала залогиньтесь"): Availability.available();
+        return studentService.getCurrentStudent() == null
+                ? Availability.unavailable("Сначала залогиньтесь")
+                : Availability.available();
     }
 }

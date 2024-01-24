@@ -1,7 +1,5 @@
 package ru.otus.hw.service;
 
-import lombok.RequiredArgsConstructor;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -10,12 +8,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import ru.otus.hw.domain.Student;
 
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@DisplayName("Should run test")
+@DisplayName("Should execute test for student")
 @SpringBootTest(properties = "spring.shell.interactive.enabled=false")
 public class TestRunnerServiceImplTest {
     private final Student student = new Student("Ivan", "Ivanov");
