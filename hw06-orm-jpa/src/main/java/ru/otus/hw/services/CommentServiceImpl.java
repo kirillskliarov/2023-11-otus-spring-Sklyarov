@@ -30,7 +30,7 @@ public class CommentServiceImpl implements CommentService {
         var book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new EntityNotFoundException("Book with id %d not found".formatted(bookId)));
 
-        return commentRepository.findCommentsByBookId(bookId);
+        return book.getComments().stream().toList();
     }
 
     @Override

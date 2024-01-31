@@ -36,15 +36,6 @@ class CommentRepositoryJpaTest {
                 .usingRecursiveComparison().isEqualTo(expectedComment);
     }
 
-    @DisplayName("должен загружать список комментариев по id книги")
-    @Test
-    void shouldReturnCorrectCommentList() {
-        var comments = repositoryJpa.findCommentsByBookId(FIRST_BOOK_ID);
-
-        assertThat(comments).isNotNull().hasSize(EXPECTED_NUMBER_OF_COMMENTS)
-                .allMatch(comment -> !comment.getText().isEmpty());
-    }
-
     @DisplayName("должен сохранять новый комментарий")
     @Test
     void shouldSaveNewComment() {

@@ -29,6 +29,8 @@ import static org.mockito.Mockito.verify;
 @ExtendWith(SpringExtension.class)
 @DisplayName("Should execute test for CommentServiceImpl")
 public class CommentServiceImplTest {
+    private static final int EXPECTED_NUMBER_OF_COMMENTS = 1;
+
     @MockBean
     public AuthorRepository authorRepository;
 
@@ -51,7 +53,7 @@ public class CommentServiceImplTest {
         var author = new Author(1, "Author_1");
         var genre = new Genre(1, "Genre_1");
         long bookId = 1;
-        var book = new Book(bookId, "Book_1", author, genre);
+        var book = new Book(bookId, "Book_1", author, genre, List.of());
         long commentId = 1;
         var expectedComment = new Comment(commentId, "Comment_Text_1", book);
         Mockito.when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
@@ -71,18 +73,19 @@ public class CommentServiceImplTest {
         var author = new Author(1, "Author_1");
         var genre = new Genre(1, "Genre_1");
         long bookId = 1;
-        var book = new Book(bookId, "Book_1", author, genre);
-        List<Comment> expectedComments = List.of(new Comment(1, "Comment_Text_1", book));
+        var book = new Book(bookId, "Book_1", author, genre, List.of());
+        var expectedComment = new Comment(1, "Comment_Text_1", book);
+        var expectedCommentList = List.of(expectedComment);
+        book.setComments(expectedCommentList);
         Mockito.when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
-        Mockito.when(commentRepository.findCommentsByBookId(bookId)).thenReturn(expectedComments);
 
         // Act
-        var comments = commentService.findCommentsByBookId(bookId);
+        var commentList = commentService.findCommentsByBookId(bookId);
 
         // Assert
-        assertThat(comments).isNotNull().usingRecursiveComparison().isEqualTo(expectedComments);
+        assertThat(commentList).isNotNull().hasSize(EXPECTED_NUMBER_OF_COMMENTS)
+                .allMatch(comment -> !comment.getText().isEmpty());
     }
-
 
     @Test
     @DisplayName("should insert comment")
@@ -91,7 +94,7 @@ public class CommentServiceImplTest {
         var author = new Author(1, "Author_1");
         var genre = new Genre(1, "Genre_1");
         long bookId = 1;
-        var book = new Book(bookId, "Book_1", author, genre);
+        var book = new Book(bookId, "Book_1", author, genre, List.of());
         var commentText = "Comment_Text_1";
         var comment = new Comment(0, commentText, book);
         var expectedComment = new Comment(1, commentText, book);
@@ -111,7 +114,7 @@ public void shouldUpdateComment() {
     var author = new Author(1, "Author_1");
     var genre = new Genre(1, "Genre_1");
     long bookId = 1;
-    var book = new Book(bookId, "Book_1", author, genre);
+    var book = new Book(bookId, "Book_1", author, genre, List.of());
     long commentId = 1;
     var commentText = "Comment_Text_1";
     var comment = new Comment(commentId, commentText, book);
@@ -132,7 +135,7 @@ public void shouldUpdateComment() {
         // Arrange
         var author = new Author(1, "Author_1");
         var genre = new Genre(1, "Genre_1");
-        var book = new Book(1, "Book_1", author, genre);
+        var book = new Book(1, "Book_1", author, genre, List.of());
         long commentId = 1;
         var commentText = "Comment_Text_1";
         var comment = new Comment(commentId, commentText, book);

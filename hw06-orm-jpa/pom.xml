@@ -87,6 +87,7 @@
                 <configuration>
                     <configLocation>${checkstyle.config.url}</configLocation>
                 </configuration>
+
                 <executions>
                     <execution>
                         <goals>

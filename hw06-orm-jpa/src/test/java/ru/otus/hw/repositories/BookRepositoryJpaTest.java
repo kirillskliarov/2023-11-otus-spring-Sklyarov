@@ -10,6 +10,8 @@ import ru.otus.hw.models.Author;
 import ru.otus.hw.models.Book;
 import ru.otus.hw.models.Genre;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("Репозиторий на основе Jpa для работы с книгами")
@@ -54,7 +56,7 @@ class BookRepositoryJpaTest {
     void shouldSaveNewBook() {
         var author = em.find(Author.class, FIRST_AUTHOR_ID);
         var genre = em.find(Genre.class, FIRST_GENRE_ID);
-        var expectedBook = new Book(0, "BookTitle_10500", author, genre);
+        var expectedBook = new Book(0, "BookTitle_10500", author, genre, List.of());
         var returnedBook = repositoryJpa.save(expectedBook);
         assertThat(returnedBook).isNotNull()
                 .matches(book -> book.getId() > 0)
@@ -71,7 +73,7 @@ class BookRepositoryJpaTest {
     void shouldSaveUpdatedBook() {
         var author = em.find(Author.class, FIRST_AUTHOR_ID);
         var genre = em.find(Genre.class, FIRST_GENRE_ID);
-        var expectedBook = new Book(1L, "BookTitle_10500", author, genre);
+        var expectedBook = new Book(1L, "BookTitle_10500", author, genre, List.of());
 
         assertThat(repositoryJpa.findById(expectedBook.getId()))
                 .isPresent()

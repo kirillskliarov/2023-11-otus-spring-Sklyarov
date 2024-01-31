@@ -3,12 +3,12 @@ package ru.otus.hw.repositories;
 import lombok.AllArgsConstructor;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import ru.otus.hw.models.Author;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
+@Service
 @AllArgsConstructor
 public class AuthorRepositoryJpa implements AuthorRepository {
     @PersistenceContext

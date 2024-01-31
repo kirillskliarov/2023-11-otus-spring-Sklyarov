@@ -7,7 +7,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.otus.hw.models.Author;
@@ -32,7 +31,6 @@ public class BookServiceImplTest {
     public AuthorRepository authorRepository;
 
     @MockBean
-    @SpyBean
     public BookRepository bookRepository;
 
     @MockBean
@@ -48,7 +46,7 @@ public class BookServiceImplTest {
         // Arrange
         var author = new Author(1, "Author_1");
         var genre = new Genre(1, "Genre_1");
-        List<Book> expectedBooks = List.of(new Book(1, "Book_1", author, genre));
+        List<Book> expectedBooks = List.of(new Book(1, "Book_1", author, genre, List.of()));
         var expectedSize = expectedBooks.size();
         Mockito.when(bookRepository.findAll()).thenReturn(expectedBooks);
 
@@ -66,7 +64,7 @@ public class BookServiceImplTest {
         var author = new Author(1, "Author_1");
         var genre = new Genre(1, "Genre_1");
         long bookId = 1;
-        var expectedBook = new Book(1, "Book_1", author, genre);
+        var expectedBook = new Book(1, "Book_1", author, genre, List.of());
         Mockito.when(bookRepository.findById(bookId)).thenReturn(Optional.of(expectedBook));
 
         // Act
@@ -85,8 +83,8 @@ public class BookServiceImplTest {
         long genreId = 1;
         var genre = new Genre(genreId, "Genre_1");
         var bookTitle = "Book_1";
-        var book = new Book(0, bookTitle, author, genre);
-        var expectedBook = new Book(1, bookTitle, author, genre);
+        var book = new Book(0, bookTitle, author, genre, List.of());
+        var expectedBook = new Book(1, bookTitle, author, genre, List.of());
         Mockito.when(bookRepository.save(book)).thenReturn(expectedBook);
         Mockito.when(authorRepository.findById(authorId)).thenReturn(Optional.of(author));
         Mockito.when(genreRepository.findById(genreId)).thenReturn(Optional.of(genre));
@@ -108,7 +106,7 @@ public class BookServiceImplTest {
         var genre = new Genre(genreId, "Genre_1");
         var bookTitle = "Book_1";
         long bookId = 1;
-        var book = new Book(bookId, bookTitle, author, genre);
+        var book = new Book(bookId, bookTitle, author, genre, List.of());
         Mockito.when(authorRepository.findById(authorId)).thenReturn(Optional.of(author));
         Mockito.when(genreRepository.findById(genreId)).thenReturn(Optional.of(genre));
         Mockito.when(bookRepository.save(book)).thenReturn(book);
@@ -128,7 +126,7 @@ public class BookServiceImplTest {
         var author = new Author(1, "Author_1");
         var genre = new Genre(1, "Genre_1");
         long bookId = 1;
-        var book = new Book(1, "Book_1", author, genre);
+        var book = new Book(1, "Book_1", author, genre, List.of());
         Mockito.when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
 
         // Act
