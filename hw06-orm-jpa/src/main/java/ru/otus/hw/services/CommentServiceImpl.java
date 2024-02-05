@@ -24,10 +24,10 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    @Transactional
     public List<Comment> findCommentsByBookId(long bookId) {
         var book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new EntityNotFoundException("Book with id %d not found".formatted(bookId)));
-
         return book.getComments().stream().toList();
     }
 
