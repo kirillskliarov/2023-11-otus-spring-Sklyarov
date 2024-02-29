@@ -1,0 +1,9 @@
+<app-card>
+    <ng-container *ngIf="author$">
+        <ng-container *ngIf="author$ | async as author">
+            <app-item>id: {{author.id}}</app-item>
+            <app-item>name: {{author.fullName}}</app-item>
+        </ng-container>
+    </ng-container>
+</app-card>
+
