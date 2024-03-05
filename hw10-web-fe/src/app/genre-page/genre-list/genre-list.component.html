@@ -1,0 +1,17 @@
+<ng-container *ngIf="genres$">
+    <app-card>
+        <div *ngFor="let genre of genres$ | async">
+            <a [routerLink]="[genre.id]">
+                <app-item>{{genre.name}}</app-item>
+            </a>
+        </div>
+    </app-card>
+</ng-container>
+
+<form [formGroup]="genreForm" (ngSubmit)="submit()">
+    <input formControlName="name"/>
+    <button [disabled]="genreForm.invalid"
+            type="submit">
+        Создать
+    </button>
+</form>

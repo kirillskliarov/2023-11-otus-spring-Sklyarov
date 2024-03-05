@@ -1,0 +1,17 @@
+<ng-container *ngIf="authors$">
+    <app-card>
+        <div *ngFor="let author of authors$ | async">
+            <a [routerLink]="[author.id]">
+                <app-item>{{author.fullName}}</app-item>
+            </a>
+        </div>
+    </app-card>
+</ng-container>
+
+<form [formGroup]="authorForm" (ngSubmit)="submit()">
+    <input formControlName="fullName"/>
+    <button [disabled]="authorForm.invalid"
+            type="submit">
+        Создать
+    </button>
+</form>
