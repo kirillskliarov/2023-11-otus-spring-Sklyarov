@@ -1,0 +1,20 @@
+<app-card>
+    <div *ngFor="let book of books$ | async"
+         class="item">
+        <div>
+            <a [routerLink]="[book.id]">
+                <app-item>
+                    {{book.title}}
+                </app-item>
+            </a>
+        </div>
+        <div>
+            <button type="button"
+                    (click)="delete(book.id)">
+                Delete
+            </button>
+        </div>
+    </div>
+</app-card>
+
+<app-book-form (submitted)="refresh()"/>
