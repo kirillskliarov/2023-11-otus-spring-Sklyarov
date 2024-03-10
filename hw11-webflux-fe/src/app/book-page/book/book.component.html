@@ -1,0 +1,39 @@
+<ng-container *ngIf="book$ | async as book">
+    <app-card>
+        <ng-container *ngIf="!isEdit(); else bookForm">
+            <app-item>id: {{book.id}}</app-item>
+            <app-item>name: {{book.title}}</app-item>
+            <app-item>author: {{book.author.fullName}}</app-item>
+            <app-item>genre: {{book.genre.name}}</app-item>
+        </ng-container>
+        <ng-template #bookForm>
+            <app-book-form [book]="book"
+                        (submitted)="onBookSubmitted()"/>
+        </ng-template>
+    
+        <app-item>
+            <button *ngIf="!isEdit()"
+                    type="button"
+                    (click)="setIsEdit(true)">
+                Edit
+            </button>
+            <button *ngIf="isEdit()"
+                    type="button"
+                    (click)="setIsEdit(false)">
+                Cancel
+            </button>
+        </app-item>
+    </app-card>
+
+    <app-card>
+        <h4>Comments</h4>
+        <app-item *ngFor="let comment of book.comments">
+            {{comment.text}}
+        </app-item>
+
+        <form [formGroup]="commentForm" (ngSubmit)="createComment()">
+            <textarea formControlName="text"></textarea>
+            <button type="submit" [disabled]="commentForm.invalid">Отправить</button>
+        </form>
+    </app-card>
+</ng-container>    

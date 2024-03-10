@@ -1,0 +1,8 @@
+<app-card>
+    <ng-container *ngIf="genre$">
+        <ng-container *ngIf="genre$ | async as genre">
+            <app-item>id: {{genre.id}}</app-item>
+            <app-item>name: {{genre.name}}</app-item>
+        </ng-container>
+    </ng-container>
+</app-card>

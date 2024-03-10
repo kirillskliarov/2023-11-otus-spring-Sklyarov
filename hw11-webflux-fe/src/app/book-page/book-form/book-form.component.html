@@ -1,0 +1,33 @@
+<app-card>
+    <form [formGroup]="bookForm" (ngSubmit)="submit()">
+        <app-item>
+            <input formControlName="title"/>
+        </app-item>
+        <app-item>
+            <select formControlName="authorId">
+                <option [ngValue]="null">Select author</option>
+                <option *ngFor="let author of authors$ | async"
+                        [ngValue]="author.id">
+                    {{author.fullName}}
+                </option>
+            </select>
+        </app-item>
+        <app-item>
+            <select formControlName="genreId">
+                <option [ngValue]="null">Select genre</option>
+                <option *ngFor="let genre of genres$ | async"
+                        [ngValue]="genre.id">
+                    {{genre.name}}
+                </option>
+            </select>
+        </app-item>
+        <app-item>
+            <button [disabled]="bookForm.invalid"
+                    type="submit">
+                <ng-container *ngIf="!book; else saveTemplate">Create</ng-container>
+                <ng-template #saveTemplate>Save</ng-template>
+            </button>
+        </app-item>
+    </form>
+</app-card>
+
