@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'Book ' + ${book.title}"></title>
+    <link th:replace="~{common/common :: stylesheet}" >
+</head>
+<body>
+<nav th:replace="~{common/common :: nav (active='books')}"></nav>
+<div class="content">
+    <form th:action="@{/books/{id}/edit(id=${book.id})}" method="POST" th:object="${bookDtoRequest}">
+        <div class="item">
+            <input th:value="${book.title}" name="title"/>
+            <div class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+        </div>
+        <div class="item">
+            <select name="authorId">
+                <option th:each="author : ${authors}"
+                        th:value="${author.id}"
+                        th:selected="${book.author.id == author.id}"
+                        th:text="${author.fullName}">
+                </option>
+            </select>
+        </div>
+        <div class="item">
+            <select th:selected="${book.genre.id}"
+                    name="genreId">
+                <option th:each="genre : ${genres}"
+                        th:value="${genre.id}"
+                        th:selected="${book.genre.id == genre.id}"
+                        th:text="${genre.name}">
+                </option>
+            </select>
+        </div>
+        <div class="item">
+            <button type="submit">
+                Save
+            </button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
