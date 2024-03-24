@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Books</title>
+    <link th:replace="~{common/common :: stylesheet}" >
+</head>
+<body>
+<nav th:replace="~{common/common :: nav (active='books')}"></nav>
+<div class="content">
+    <div class="item" th:each="book : ${books}">
+        <div style="display: flex; justify-content: space-between;">
+            <div>
+                <a th:href="@{/books/{id}(id=${book.id})}"
+                   th:text="${book.title}">
+                </a>
+            </div>
+            <div sec:authorize="hasRole('ROLE_ADMIN')">
+                <form th:action="@{/books/{id}/delete(id=${book.id})}" method="POST">
+                    <button type="submit">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content" sec:authorize="hasRole('ROLE_ADMIN')">
+    <form action="/books" method="POST" th:object="${bookDtoRequest}">
+        <div class="item" >
+            <input name="title"/>
+            <div class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+        </div>
+        <div class="item" >
+            <select name="authorId">
+                <option value="">Select author</option>
+                <option th:each="author : ${authors}"
+                        th:value="${author.id}"
+                        th:text="${author.fullName}">
+                </option>
+            </select>
+            <div class="error" th:if="${#fields.hasErrors('authorId')}" th:errors="*{authorId}"></div>
+        </div>
+        <div class="item">
+            <select name="genreId">
+                <option value="">Select genre</option>
+                <option th:each="genre : ${genres}"
+                        th:value="${genre.id}"
+                        th:text="${genre.name}">
+                </option>
+            </select>
+            <div class="error" th:if="${#fields.hasErrors('genreId')}" th:errors="*{genreId}"></div>
+        </div>
+        <div class="item">
+            <button type="submit">
+                Create
+            </button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
