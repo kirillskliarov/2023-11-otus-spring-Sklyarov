@@ -2,7 +2,6 @@ package ru.otus.hw.controllers;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,7 +19,6 @@ import java.util.List;
 public class GenreController {
     private final GenreService genreService;
 
-    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @GetMapping("/genres")
     public String getAll(GenreDtoRequest genreDtoRequest, Model model) {
         List<Genre> genres = genreService.findAll().stream().toList();
@@ -28,7 +26,6 @@ public class GenreController {
         return "genres";
     }
 
-    @Secured({"ROLE_ADMIN"})
     @PostMapping("/genres")
     public String create(
             @Valid @ModelAttribute GenreDtoRequest genreDtoRequest,

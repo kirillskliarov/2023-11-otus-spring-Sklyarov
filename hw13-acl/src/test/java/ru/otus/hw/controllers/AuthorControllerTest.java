@@ -10,7 +10,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.otus.hw.models.Author;
 import ru.otus.hw.models.dto.request.AuthorDtoRequest;
-import ru.otus.hw.security.MethodSecurityConfiguration;
+import ru.otus.hw.security.SecurityConfig;
 import ru.otus.hw.services.AuthorService;
 
 import java.util.List;
@@ -18,13 +18,16 @@ import java.util.List;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.allOf;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.http.HttpHeaders.LOCATION;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(AuthorController.class)
-@Import(MethodSecurityConfiguration.class)
+@Import(SecurityConfig.class)
 public class AuthorControllerTest {
 
     @Autowired
@@ -62,7 +65,8 @@ public class AuthorControllerTest {
     @Test
     void shouldDenyAuthorList() throws Exception {
         mvc.perform(get("/authors"))
-                .andExpect(status().is4xxClientError());
+                .andExpect(status().is3xxRedirection())
+                .andExpect(header().string(LOCATION, containsString("/login")));
     }
 
     @Test
@@ -75,7 +79,8 @@ public class AuthorControllerTest {
         mvc.perform(post("/authors")
                         .with(csrf())
                         .param("fullName", authorDtoRequest.getFullName()))
-                .andExpect(status().is3xxRedirection());
+                .andExpect(status().is3xxRedirection())
+                .andExpect(header().string(LOCATION, containsString("/authors")));
     }
 
     @Test
@@ -96,6 +101,8 @@ public class AuthorControllerTest {
         mvc.perform(post("/authors")
                         .with(csrf())
                         .param("fullName", authorDtoRequest.getFullName()))
-                .andExpect(status().is4xxClientError());
+                .andExpect(status().is3xxRedirection())
+                .andExpect(header().string(LOCATION, containsString("/login")))
+        ;
     }
 }

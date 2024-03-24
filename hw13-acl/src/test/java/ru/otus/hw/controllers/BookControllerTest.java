@@ -14,7 +14,7 @@ import ru.otus.hw.models.Genre;
 import ru.otus.hw.models.dto.request.BookDtoRequest;
 import ru.otus.hw.models.dto.request.CommentDtoRequest;
 import ru.otus.hw.models.dto.response.BookDtoResponse;
-import ru.otus.hw.security.MethodSecurityConfiguration;
+import ru.otus.hw.security.SecurityConfig;
 import ru.otus.hw.services.AuthorService;
 import ru.otus.hw.services.BookService;
 import ru.otus.hw.services.CommentService;
@@ -26,14 +26,14 @@ import java.util.Optional;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.http.HttpHeaders.LOCATION;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(BookController.class)
-@Import(MethodSecurityConfiguration.class)
+@Import(SecurityConfig.class)
 public class BookControllerTest {
     @Autowired
     private MockMvc mvc;
@@ -76,16 +76,10 @@ public class BookControllerTest {
     }
 
     @Test
-    @WithMockUser(authorities = {"ROLE_ANONYMOUS"})
-    void shouldDenyBookListForNonPermittedUser() throws Exception {
-        mvc.perform(get("/books"))
-                .andExpect(status().is4xxClientError());
-    }
-
-    @Test
     void shouldDenyBookList() throws Exception {
         mvc.perform(get("/books"))
-                .andExpect(status().is4xxClientError());
+                .andExpect(status().is3xxRedirection())
+                .andExpect(header().string(LOCATION, containsString("/login")));
     }
 
     @Test
@@ -114,7 +108,8 @@ public class BookControllerTest {
     @Test
     void shouldDenyBookById() throws Exception {
         mvc.perform(get("/books/1"))
-                .andExpect(status().is4xxClientError());
+                .andExpect(status().is3xxRedirection())
+                .andExpect(header().string(LOCATION, containsString("/login")));
     }
 
     @Test
@@ -169,7 +164,8 @@ public class BookControllerTest {
                         .param("authorId", String.valueOf(bookDtoRequest.getAuthorId()))
                         .param("genreId", String.valueOf(bookDtoRequest.getGenreId()))
                 )
-                .andExpect(status().is4xxClientError());
+                .andExpect(status().is3xxRedirection())
+                .andExpect(header().string(LOCATION, containsString("/login")));
     }
 
     @Test
@@ -228,7 +224,8 @@ public class BookControllerTest {
                         .param("authorId", String.valueOf(bookDtoRequest.getAuthorId()))
                         .param("genreId", String.valueOf(bookDtoRequest.getGenreId()))
                 )
-                .andExpect(status().is4xxClientError());
+                .andExpect(status().is3xxRedirection())
+                .andExpect(header().string(LOCATION, containsString("/login")));
     }
 
     @Test
@@ -255,7 +252,8 @@ public class BookControllerTest {
     void shouldDenyCreatingComment() throws Exception {
         mvc.perform(post("/books/1/comment")
                         .with(csrf()))
-                .andExpect(status().is4xxClientError());
+                .andExpect(status().is3xxRedirection())
+                .andExpect(header().string(LOCATION, containsString("/login")));
     }
 
     @Test
@@ -284,7 +282,8 @@ public class BookControllerTest {
 
         mvc.perform(post("/books/" + bookId + "/delete")
                         .with(csrf()))
-                .andExpect(status().is4xxClientError());
+                .andExpect(status().is3xxRedirection())
+                .andExpect(header().string(LOCATION, containsString("/login")));
     }
 
 }

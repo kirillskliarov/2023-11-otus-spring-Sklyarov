@@ -2,7 +2,6 @@ package ru.otus.hw.controllers;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,7 +19,6 @@ import java.util.List;
 public class AuthorController {
     private final AuthorService authorService;
 
-    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @GetMapping("/authors")
     public String getAll(
             AuthorDtoRequest authorDtoRequest,
@@ -30,7 +28,6 @@ public class AuthorController {
         return "authors";
     }
 
-    @Secured({"ROLE_ADMIN"})
     @PostMapping("/authors")
     public String create(
             @Valid @ModelAttribute AuthorDtoRequest authorDtoRequest,

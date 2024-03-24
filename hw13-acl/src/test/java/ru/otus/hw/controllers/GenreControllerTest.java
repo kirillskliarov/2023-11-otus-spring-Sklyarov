@@ -10,7 +10,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.otus.hw.models.Genre;
 import ru.otus.hw.models.dto.request.GenreDtoRequest;
-import ru.otus.hw.security.MethodSecurityConfiguration;
+import ru.otus.hw.security.SecurityConfig;
 import ru.otus.hw.services.GenreService;
 
 import java.util.List;
@@ -19,14 +19,14 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.BDDMockito.any;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.http.HttpHeaders.LOCATION;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(GenreController.class)
-@Import(MethodSecurityConfiguration.class)
+@Import(SecurityConfig.class)
 public class GenreControllerTest {
     @Autowired
     private MockMvc mvc;
@@ -63,7 +63,8 @@ public class GenreControllerTest {
     @Test
     void shouldDenyGenreList() throws Exception {
         mvc.perform(get("/genres"))
-                .andExpect(status().is4xxClientError());
+                .andExpect(status().is3xxRedirection())
+                .andExpect(header().string(LOCATION, containsString("/login")));
     }
 
     @Test
@@ -78,7 +79,8 @@ public class GenreControllerTest {
         mvc.perform(post("/genres")
                         .with(csrf())
                         .param("name", genreDtoRequest.getName()))
-                .andExpect(status().is3xxRedirection());
+                .andExpect(status().is3xxRedirection())
+                .andExpect(header().string(LOCATION, containsString("/genres")));
     }
 
     @Test
@@ -99,6 +101,7 @@ public class GenreControllerTest {
         mvc.perform(post("/genres")
                         .with(csrf())
                         .param("name", genreDtoRequest.getName()))
-                .andExpect(status().is4xxClientError());
+                .andExpect(status().is3xxRedirection())
+                .andExpect(header().string(LOCATION, containsString("/login")));
     }
 }

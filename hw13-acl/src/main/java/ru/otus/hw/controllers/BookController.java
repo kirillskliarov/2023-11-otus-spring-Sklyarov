@@ -2,7 +2,6 @@ package ru.otus.hw.controllers;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,7 +35,6 @@ public class BookController {
 
     private final CommentService commentService;
 
-    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @GetMapping("/books")
     public String getAll(BookDtoRequest bookDtoRequest, Model model) {
         List<BookDtoResponse> books = bookService.findAll().stream().toList();
@@ -48,7 +46,6 @@ public class BookController {
         return "books";
     }
 
-    @Secured({"ROLE_ADMIN"})
     @PostMapping("/books")
     public String create(
             @Valid @ModelAttribute BookDtoRequest bookDtoRequest,
@@ -69,7 +66,6 @@ public class BookController {
         return "redirect:/books";
     }
 
-    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @GetMapping("/books/{id}")
     public String getById(
             @PathVariable long id,
@@ -80,7 +76,6 @@ public class BookController {
         return "book";
     }
 
-    @Secured({"ROLE_ADMIN"})
     @GetMapping("/books/{id}/edit")
     public String getEditFormBookById(
             @PathVariable long id,
@@ -96,7 +91,6 @@ public class BookController {
         return "book-edit";
     }
 
-    @Secured({"ROLE_ADMIN"})
     @PostMapping("/books/{id}/edit")
     public String update(
             @PathVariable long id,
@@ -120,14 +114,12 @@ public class BookController {
 
     }
 
-    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @PostMapping("/books/{id}/comment")
     public RedirectView createComment(@PathVariable long id, @ModelAttribute CommentDtoRequest commentDtoRequest) {
         commentService.insert(commentDtoRequest.getText(), id);
         return new RedirectView("/books/" + id);
     }
 
-    @Secured({"ROLE_ADMIN"})
     @PostMapping("/books/{id}/delete")
     public RedirectView delete(@PathVariable long id) {
         bookService.deleteById(id);
