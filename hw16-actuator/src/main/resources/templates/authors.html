@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Authors</title>
+    <link th:replace="~{common/common :: stylesheet}" >
+</head>
+<body>
+<nav th:replace="~{common/common :: nav (active='authors')}"></nav>
+<div class="content">
+    <div class="item"
+         th:each="author : ${authors}"
+         th:text="${author.fullName}">
+    </div>
+</div>
+<div class="content">
+    <form action="/authors" method="POST" th:object="${authorDtoRequest}">
+        <div class="item" >
+            <input name="fullName" th:field="*{fullName}"/>
+            <div class="error" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></div>
+        </div>
+        <div class="item">
+            <button type="submit">
+                Create
+            </button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

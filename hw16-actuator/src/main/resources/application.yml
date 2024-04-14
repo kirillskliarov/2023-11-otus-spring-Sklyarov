@@ -1,0 +1,33 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:maindb
+    initialization-mode: always
+
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+
+    show-sql: false
+
+  jmx:
+    enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - metrics
+          - loggers
+  endpoint:
+    health:
+      show-details: always
+  health:
+    defaults:
+      enabled: true
+
+work-hours:
+  start: "07:00"
+  end: "23:00"
