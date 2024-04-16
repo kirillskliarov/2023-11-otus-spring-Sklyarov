@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Common</title>
+    <link th:fragment="stylesheet" rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <nav th:fragment="nav (active)">
+      <a href="/genres"
+         th:class="${active == 'genres' ? 'isActive' : ''}">
+        Genres
+      </a>
+      <a href="/authors"
+         th:class="${active == 'authors' ? 'isActive' : ''}">
+        Authors
+      </a>
+      <a href="/books"
+         th:class="${active == 'books' ? 'isActive' : ''}">
+        Books
+      </a>
+  </nav>
+</body>
+</html>
