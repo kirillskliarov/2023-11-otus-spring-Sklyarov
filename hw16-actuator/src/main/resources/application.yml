@@ -21,12 +21,17 @@ management:
           - health
           - metrics
           - loggers
+          - logfile
   endpoint:
     health:
       show-details: always
   health:
     defaults:
       enabled: true
+
+logging:
+  file:
+    name: "./logs/app.log"
 
 work-hours:
   start: "07:00"
