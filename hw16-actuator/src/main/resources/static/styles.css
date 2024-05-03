@@ -1,0 +1,38 @@
+nav {
+    margin-bottom: 10px;
+
+    & > a {
+        background-color: lightgray;
+        padding: 10px;
+
+        &:first-child {
+            border-top-left-radius: 6px;
+            border-bottom-left-radius: 6px;
+        }
+
+        &:last-child {
+            border-top-right-radius: 6px;
+            border-bottom-right-radius: 6px;
+        }
+
+        &.isActive {
+            background-color: white;
+        }
+
+        &:hover {
+            background-color: lightskyblue;
+        }
+    }
+}
+
+.content {
+    width: 500px;
+}
+
+.item {
+    padding: 10px;
+}
+
+.error {
+    color: red;
+}
