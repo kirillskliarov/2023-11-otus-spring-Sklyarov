@@ -30,4 +30,16 @@ public class UserController {
             throw new UsernameNotFoundException("invalid user request..!!");
         }
     }
+
+//    @PostMapping("/api/v1/sign-up")
+//    public JwtResponseDTO registerAndGetToken(@RequestBody AuthRequestDTO authRequestDTO) {
+//
+//        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequestDTO.getUsername(), authRequestDTO.getPassword()));
+//        if (authentication.isAuthenticated()) {
+//            return JwtResponseDTO.builder()
+//                    .accessToken(jwtService.GenerateToken(authRequestDTO.getUsername())).build();
+//        } else {
+//            throw new UsernameNotFoundException("invalid user request..!!");
+//        }
+//    }
 }

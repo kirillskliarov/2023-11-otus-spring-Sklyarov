@@ -40,8 +40,13 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//        http.authorizeHttpRequests(auth -> auth
+//                .requestMatchers("/api/v1/login").permitAll()
+//                .requestMatchers("/api/v1/**").authenticated()
+//        );
         return http.csrf().disable()
                 .authorizeHttpRequests()
+                .requestMatchers("/api/v1/login").permitAll()
                 .requestMatchers("/api/v1/login").permitAll()
                 .and()
                 .authorizeHttpRequests().requestMatchers("/api/v1/**")
