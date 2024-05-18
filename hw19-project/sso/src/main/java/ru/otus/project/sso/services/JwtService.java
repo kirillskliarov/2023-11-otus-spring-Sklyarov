@@ -7,8 +7,8 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import ru.otus.project.sso.models.User;
 
 import java.security.Key;
 import java.util.Date;
@@ -16,63 +16,114 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-@Component
+@Service
 public class JwtService {
+    @Value("${token.signing.key}")
+    private String jwtSigningKey;
 
-    public static final String SECRET = "357638792F423F4428472B4B6250655368566D597133743677397A2443264629";
-
-    public String extractUsername(String token) {
+    /**
+     * Извлечение имени пользователя из токена
+     *
+     * @param token токен
+     * @return имя пользователя
+     */
+    public String extractUserName(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
-    public Date extractExpiration(String token) {
-        return extractClaim(token, Claims::getExpiration);
+    /**
+     * Генерация токена
+     *
+     * @param userDetails данные пользователя
+     * @return токен
+     */
+    public String generateToken(UserDetails userDetails) {
+        Map<String, Object> claims = new HashMap<>();
+        if (userDetails instanceof User customUserDetails) {
+            claims.put("id", customUserDetails.getId());
+            claims.put("email", customUserDetails.getEmail());
+            claims.put("role", customUserDetails.getRole());
+        }
+        return generateToken(claims, userDetails);
     }
 
-    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+    /**
+     * Проверка токена на валидность
+     *
+     * @param token       токен
+     * @param userDetails данные пользователя
+     * @return true, если токен валиден
+     */
+    public boolean isTokenValid(String token, UserDetails userDetails) {
+        final String userName = extractUserName(token);
+        return (userName.equals(userDetails.getUsername())) && !isTokenExpired(token);
+    }
+
+    /**
+     * Извлечение данных из токена
+     *
+     * @param token           токен
+     * @param claimsResolvers функция извлечения данных
+     * @param <T>             тип данных
+     * @return данные
+     */
+    private <T> T extractClaim(String token, Function<Claims, T> claimsResolvers) {
         final Claims claims = extractAllClaims(token);
-        return claimsResolver.apply(claims);
+        return claimsResolvers.apply(claims);
     }
 
-    private Claims extractAllClaims(String token) {
-        return Jwts
-                .parserBuilder()
-                .setSigningKey(getSignKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+    /**
+     * Генерация токена
+     *
+     * @param extraClaims дополнительные данные
+     * @param userDetails данные пользователя
+     * @return токен
+     */
+    private String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+        return Jwts.builder().setClaims(extraClaims).setSubject(userDetails.getUsername())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 100000 * 60 * 24))
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();
     }
 
-    private Boolean isTokenExpired(String token) {
+    /**
+     * Проверка токена на просроченность
+     *
+     * @param token токен
+     * @return true, если токен просрочен
+     */
+    private boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
 
-    public Boolean validateToken(String token, UserDetails userDetails) {
-        final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    /**
+     * Извлечение даты истечения токена
+     *
+     * @param token токен
+     * @return дата истечения
+     */
+    private Date extractExpiration(String token) {
+        return extractClaim(token, Claims::getExpiration);
     }
 
-
-
-    public String GenerateToken(String username){
-        Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, username);
+    /**
+     * Извлечение всех данных из токена
+     *
+     * @param token токен
+     * @return данные
+     */
+    private Claims extractAllClaims(String token) {
+        return Jwts.parser().setSigningKey(getSigningKey()).build().parseClaimsJws(token)
+                .getBody();
     }
 
-
-
-    private String createToken(Map<String, Object> claims, String username) {
-
-        return Jwts.builder()
-                .setClaims(claims)
-                .setSubject(username)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis()+1000*60*1))
-                .signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
-    }
-
-    private Key getSignKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(SECRET);
+    /**
+     * Получение ключа для подписи токена
+     *
+     * @return ключ
+     */
+    private Key getSigningKey() {
+        byte[] keyBytes = Decoders.BASE64.decode(jwtSigningKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 }
