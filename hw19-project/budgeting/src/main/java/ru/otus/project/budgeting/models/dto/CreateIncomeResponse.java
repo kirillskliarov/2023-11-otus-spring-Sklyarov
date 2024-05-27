@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class CreateIncomeResponse {
-    private Long value;
+    private Long id;
 }

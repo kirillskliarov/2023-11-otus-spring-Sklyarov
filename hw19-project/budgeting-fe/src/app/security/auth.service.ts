@@ -16,7 +16,7 @@ export class AuthService {
   constructor() { }
 
   public signin(request: SignupRequest): Observable<SignupResponse> {
-    return this.http.post<SignupResponse>('/auth/sign-in', request).pipe(
+    return this.http.post<SignupResponse>('/api/auth/sign-up', request).pipe(
       tap(response => this.tokenService.setToken(response.token)),
     );
   }
