@@ -4,12 +4,14 @@ import { AuthComponent } from './auth/auth.component';
 import { SignupComponent } from './signup/signup.component';
 import { SigninComponent } from './signin/signin.component';
 import { IncomeComponent } from './income/income.component';
+import { AppComponent } from './app.component';
+import { isAuthenticatedGuard } from './security/is-authenticated-guard';
 
 export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'income',
+    redirectTo: 'home',
   },
   {
     path: 'auth',
@@ -31,7 +33,20 @@ export const routes: Routes = [
     ],
   },
   {
-    path: 'income',
-    component: IncomeComponent,
-  }
+    path: 'home',
+    component: HomeComponent,
+    canActivate: [isAuthenticatedGuard()],
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'income',
+      },
+      {
+        path: 'income',
+        component: IncomeComponent,
+      }
+    ],
+  },
+
 ];
