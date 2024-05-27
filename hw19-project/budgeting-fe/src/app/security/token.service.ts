@@ -1,5 +1,7 @@
 import { computed, Injectable, Signal, signal, WritableSignal } from '@angular/core';
 
+const TOKEN_KEY = 'token';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -13,11 +15,17 @@ export class TokenService {
   });
 
   constructor() {
-    const tokenValue: string | null = localStorage.getItem('token');
+    const tokenValue: string | null = localStorage.getItem(TOKEN_KEY);
     this.tokenHolder.set(tokenValue);
   }
 
   public setToken(token: string | null): void {
-    this.tokenHolder.set(token);
+    if (token) {
+      localStorage.setItem(TOKEN_KEY, token);
+      this.tokenHolder.set(token);
+    } else {
+      localStorage.removeItem(TOKEN_KEY);
+      this.tokenHolder.set(null);
+    }
   }
 }
