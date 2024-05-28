@@ -29,7 +29,7 @@ import lombok.Setter;
 public class Income {
     @Id
     @Column(name = "id")
-    @NotNull
+//    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    @SequenceGenerator(name = "income_id_seq", sequenceName = "income_id_seq", allocationSize = 1)
     private Long id;
@@ -37,7 +37,7 @@ public class Income {
     @Column(name = "amount", nullable = false)
     private Long amount;
 
-    @NotNull
+//    @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;

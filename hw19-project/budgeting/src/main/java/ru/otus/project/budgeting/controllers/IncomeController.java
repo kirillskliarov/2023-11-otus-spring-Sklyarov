@@ -16,7 +16,7 @@ import ru.otus.project.budgeting.services.IncomeService;
 public class IncomeController {
     private final IncomeService incomeService;
 
-    @PostMapping("/income")
+    @PostMapping("/api/income")
     public CreateIncomeResponse createIncome(
             @RequestBody CreateIncomeRequest createIncomeRequest,
             Authentication authentication

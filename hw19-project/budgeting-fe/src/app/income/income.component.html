@@ -1,1 +1,21 @@
 <p>income works!</p>
+
+<div>
+  <form [formGroup]="form" (ngSubmit)="create()">
+    <div>
+      <label>
+        Amount
+        <input [formControl]="form.controls.amount">
+      </label>
+    </div>
+
+    <div>
+      <button
+        type="submit"
+        [disabled]="form.invalid"
+      >
+        Create
+      </button>
+    </div>
+  </form>
+</div>
