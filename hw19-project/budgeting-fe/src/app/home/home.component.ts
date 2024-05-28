@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
+import { AuthService } from '../security/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -12,5 +13,11 @@ import { RouterOutlet } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent {
+  public readonly authService: AuthService = inject(AuthService);
+  public readonly router: Router = inject(Router);
 
+  public logout(): void {
+    this.authService.logout();
+    this.router.navigate(['./']);
+  }
 }

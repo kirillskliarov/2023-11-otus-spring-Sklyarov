@@ -4,6 +4,7 @@ import { getSignupForm, SignupForm } from './signup-form';
 import { AuthService } from '../security/auth.service';
 import { SignupRequest } from '../security/dto/signup-request';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -19,6 +20,7 @@ export class SignupComponent {
   public readonly form: FormGroup<SignupForm> = getSignupForm();
   public readonly authService: AuthService = inject(AuthService);
   public readonly destroyRef: DestroyRef = inject(DestroyRef);
+  public readonly router: Router = inject(Router);
 
   public submit(): void {
     this.form.updateValueAndValidity();
@@ -29,9 +31,11 @@ export class SignupComponent {
         password: this.form.value.password ?? '',
       }
 
-      this.authService.signin(request).pipe(
+      this.authService.signup(request).pipe(
         takeUntilDestroyed(this.destroyRef),
-      ).subscribe();
+      ).subscribe({
+        next: () => this.router.navigate(['../..']),
+      });
     }
   }
 
