@@ -1,0 +1,16 @@
+<table>
+  <thead>
+  <tr>ID</tr>
+  <tr>Amount</tr>
+  </thead>
+  <tbody>
+    @if (incomeList$ | async; as incomeList) {
+      @for (income of incomeList; track income) {
+        <tr>
+          <td>{{ income.id }}</td>
+          <td>{{ income.amount | coinsToBase }}</td>
+        </tr>
+      }
+    }
+  </tbody>
+</table>

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { CreateIncomeRequest } from './dto/create-income-request';
 import { Observable } from 'rxjs';
 import { CreateIncomeResponse } from './dto/create-income-response';
+import { GetIncomeResponse } from './dto/get-income-response';
 
 @Injectable({
   providedIn: 'root'
@@ -12,5 +13,9 @@ export class IncomeService {
 
   public create(request: CreateIncomeRequest): Observable<CreateIncomeResponse> {
     return this.http.post<CreateIncomeResponse>('api/income', request);
+  }
+
+  public getList(): Observable<GetIncomeResponse[]> {
+    return this.http.get<GetIncomeResponse[]>('api/income');
   }
 }
