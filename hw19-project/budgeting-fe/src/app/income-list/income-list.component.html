@@ -1,7 +1,10 @@
 <table>
   <thead>
-  <tr>ID</tr>
-  <tr>Amount</tr>
+  <tr>
+    <td>ID</td>
+    <td>Amount</td>
+    <td>Date</td>
+  </tr>
   </thead>
   <tbody>
     @if (incomeList$ | async; as incomeList) {
@@ -9,6 +12,7 @@
         <tr>
           <td>{{ income.id }}</td>
           <td>{{ income.amount | coinsToBase }}</td>
+          <td>{{ income.date | date }}</td>
         </tr>
       }
     }

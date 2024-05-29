@@ -6,6 +6,7 @@ import { IncomeService } from './income.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { IncomeListComponent } from '../income-list/income-list.component';
 import { BaseToCoinsPipe } from '../helpers/base-to-coins.pipe';
+import { ToISOPipe } from '../helpers/to-iso.pipe';
 
 @Component({
   selector: 'app-income',
@@ -15,7 +16,7 @@ import { BaseToCoinsPipe } from '../helpers/base-to-coins.pipe';
     ReactiveFormsModule,
     IncomeListComponent,
   ],
-  providers: [BaseToCoinsPipe],
+  providers: [BaseToCoinsPipe, ToISOPipe],
   templateUrl: './income.component.html',
   styleUrl: './income.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -25,7 +26,7 @@ export class IncomeComponent implements OnInit {
   public readonly incomeService: IncomeService = inject(IncomeService);
   public readonly destroyRef: DestroyRef = inject(DestroyRef);
   public readonly baseToCoinsPipe: BaseToCoinsPipe = inject(BaseToCoinsPipe);
-
+  public readonly toISOPipe: ToISOPipe = inject(ToISOPipe);
 
   public ngOnInit(): void {
 
@@ -34,8 +35,10 @@ export class IncomeComponent implements OnInit {
   public create(): void {
     if (this.form.valid) {
       const amount = this.baseToCoinsPipe.transform(Number(this.form.controls.amount.value));
+      const date = this.toISOPipe.transform(this.form.controls.date.value);
       const createIncomeRequest: CreateIncomeRequest = {
         amount,
+        date,
       }
 
       this.incomeService.create(createIncomeRequest).pipe(

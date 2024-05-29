@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/cor
 import { IncomeService } from '../income/income.service';
 import { Observable, share } from 'rxjs';
 import { GetIncomeResponse } from '../income/dto/get-income-response';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, DatePipe } from '@angular/common';
 import { CoinsToBasePipe } from '../helpers/coins-to-base.pipe';
 
 @Component({
@@ -10,7 +10,8 @@ import { CoinsToBasePipe } from '../helpers/coins-to-base.pipe';
   standalone: true,
   imports: [
     AsyncPipe,
-    CoinsToBasePipe
+    CoinsToBasePipe,
+    DatePipe
   ],
   templateUrl: './income-list.component.html',
   styleUrl: './income-list.component.css',

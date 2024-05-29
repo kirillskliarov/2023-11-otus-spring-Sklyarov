@@ -10,6 +10,13 @@
     </div>
 
     <div>
+      <label>
+        Date
+        <input [formControl]="form.controls.date">
+      </label>
+    </div>
+
+    <div>
       <button
         type="submit"
         [disabled]="form.invalid"

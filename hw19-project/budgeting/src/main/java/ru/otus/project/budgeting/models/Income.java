@@ -18,6 +18,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Data
 @Entity
 @Builder
@@ -36,6 +38,9 @@ public class Income {
 
     @Column(name = "amount", nullable = false)
     private Long amount;
+
+    @Column(name = "date", nullable = true)
+    private Date date;
 
 //    @NotNull
     @ManyToOne(fetch = FetchType.EAGER)

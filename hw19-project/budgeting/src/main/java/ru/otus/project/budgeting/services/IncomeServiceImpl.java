@@ -30,6 +30,7 @@ public class IncomeServiceImpl implements IncomeService {
         return incomeList.stream().map(income -> GetIncomeListResponse.builder()
                 .id(income.getId())
                 .amount(income.getAmount())
+                .date(income.getDate())
                 .build()
         ).toList();
     }
