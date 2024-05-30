@@ -1,0 +1,20 @@
+<table>
+  <thead>
+  <tr>
+    <td>ID</td>
+    <td>Amount</td>
+    <td>Date</td>
+  </tr>
+  </thead>
+  <tbody>
+    @if (expenseList$ | async; as expenseList) {
+      @for (expense of expenseList; track expense) {
+        <tr>
+          <td>{{ expense.id }}</td>
+          <td>{{ expense.amount | coinsToBase }}</td>
+          <td>{{ expense.date | date }}</td>
+        </tr>
+      }
+    }
+  </tbody>
+</table>

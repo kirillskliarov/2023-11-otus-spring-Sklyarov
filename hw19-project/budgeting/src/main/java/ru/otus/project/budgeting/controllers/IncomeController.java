@@ -21,7 +21,7 @@ public class IncomeController {
     private final IncomeService incomeService;
 
     @PostMapping("/api/income")
-    public CreateIncomeResponse createIncome(
+    public CreateIncomeResponse create(
             @RequestBody CreateIncomeRequest createIncomeRequest,
             Authentication authentication
     ) {
@@ -36,7 +36,7 @@ public class IncomeController {
     }
 
     @GetMapping("/api/income")
-    public List<GetIncomeListResponse> getIncomes(
+    public List<GetIncomeListResponse> getList(
 //            @RequestBody CreateIncomeRequest createIncomeRequest,
             Authentication authentication
     ) {

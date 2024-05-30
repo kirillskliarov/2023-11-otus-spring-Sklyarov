@@ -17,6 +17,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Data
 @Entity
 @Builder
@@ -28,14 +30,15 @@ import lombok.Setter;
 public class Expense {
     @Id
     @Column(name = "id")
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "amount", nullable = false)
     private Long amount;
 
-    @NotNull
+    @Column(name = "date", nullable = true)
+    private Date date;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;

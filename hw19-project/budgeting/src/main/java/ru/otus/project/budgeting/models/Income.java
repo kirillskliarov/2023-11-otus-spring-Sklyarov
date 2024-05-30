@@ -31,9 +31,7 @@ import java.util.Date;
 public class Income {
     @Id
     @Column(name = "id")
-//    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @SequenceGenerator(name = "income_id_seq", sequenceName = "income_id_seq", allocationSize = 1)
     private Long id;
 
     @Column(name = "amount", nullable = false)
@@ -42,7 +40,6 @@ public class Income {
     @Column(name = "date", nullable = true)
     private Date date;
 
-//    @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;

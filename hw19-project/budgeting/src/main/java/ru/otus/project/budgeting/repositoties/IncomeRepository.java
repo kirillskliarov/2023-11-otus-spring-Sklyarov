@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface IncomeRepository extends ListCrudRepository<Income, Long> {
-    List<Income> findByUser(User user);
+    List<Income> findByUserOrderByDateDesc(User user);
 }

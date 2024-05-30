@@ -25,7 +25,7 @@ public class IncomeServiceImpl implements IncomeService {
     }
 
     public List<GetIncomeListResponse> findByUser(User user) {
-        List<Income> incomeList = incomeRepository.findByUser(user);
+        List<Income> incomeList = incomeRepository.findByUserOrderByDateDesc(user);
 
         return incomeList.stream().map(income -> GetIncomeListResponse.builder()
                 .id(income.getId())
