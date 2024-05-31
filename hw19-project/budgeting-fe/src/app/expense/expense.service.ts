@@ -4,6 +4,7 @@ import { CreateExpenseRequest } from './dto/create-expense-request';
 import { Observable } from 'rxjs';
 import { CreateExpenseResponse } from './dto/create-expense-response';
 import { GetExpenseResponse } from './dto/get-expense-response';
+import { GetExpenseRequest } from './dto/get-expense-request';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,11 @@ export class ExpenseService {
     return this.http.post<CreateExpenseResponse>('api/expense', request);
   }
 
-  public getList(): Observable<GetExpenseResponse[]> {
-    return this.http.get<GetExpenseResponse[]>('api/expense');
+  public getList(request?: GetExpenseRequest): Observable<GetExpenseResponse[]> {
+    return this.http.get<GetExpenseResponse[]>('api/expense', {
+      params: {
+        amountFrom: 10000,
+      }
+    });
   }
 }

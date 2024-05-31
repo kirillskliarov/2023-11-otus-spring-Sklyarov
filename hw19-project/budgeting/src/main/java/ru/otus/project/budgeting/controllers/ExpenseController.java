@@ -5,11 +5,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.otus.project.budgeting.models.Expense;
 import ru.otus.project.budgeting.models.User;
 import ru.otus.project.budgeting.models.dto.CreateExpenseRequest;
 import ru.otus.project.budgeting.models.dto.CreateExpenseResponse;
+import ru.otus.project.budgeting.models.dto.GetExpenseListRequest;
 import ru.otus.project.budgeting.models.dto.GetExpenseListResponse;
 import ru.otus.project.budgeting.services.ExpenseService;
 
@@ -37,10 +39,10 @@ public class ExpenseController {
 
     @GetMapping("/api/expense")
     public List<GetExpenseListResponse> getList(
-//            @RequestBody CreateExpenseRequest createExpenseRequest,
+            GetExpenseListRequest createExpenseRequest,
             Authentication authentication
     ) {
         User user = (User) authentication.getPrincipal();
-        return expenseService.findByUser(user);
+        return expenseService.findByQuery(user, createExpenseRequest);
     }
 }
