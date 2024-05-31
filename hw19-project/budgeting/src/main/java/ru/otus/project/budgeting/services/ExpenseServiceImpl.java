@@ -36,10 +36,10 @@ public class ExpenseServiceImpl implements ExpenseService {
     public List<GetExpenseListResponse> findByUser(User user) {
         List<Expense> expenseList = expenseRepository.findByUserOrderByDateDesc(user);
 
-        return expenseList.stream().map(income -> GetExpenseListResponse.builder()
-                .id(income.getId())
-                .amount(income.getAmount())
-                .date(income.getDate())
+        return expenseList.stream().map(expense -> GetExpenseListResponse.builder()
+                .id(expense.getId())
+                .amount(expense.getAmount())
+                .date(expense.getDate())
                 .build()
         ).toList();
     }
@@ -49,7 +49,7 @@ public class ExpenseServiceImpl implements ExpenseService {
     public List<GetExpenseListResponse> findByQuery(User user, GetExpenseListRequest request) {
         return expenseRepository.findAll(
                         (Root<Expense> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) -> {
-                            Specification<Expense> spec = Specification.where(null);
+                            Specification<Expense> spec = Specification.where((r, q, cb) -> cb.equal(r.get("user"), user));
 
                             Long amountFrom = request.getAmountFrom();
                             if (amountFrom != null) {
@@ -59,10 +59,10 @@ public class ExpenseServiceImpl implements ExpenseService {
                         }
                 ).stream()
                 .map(
-                        income -> GetExpenseListResponse.builder()
-                                .id(income.getId())
-                                .amount(income.getAmount())
-                                .date(income.getDate())
+                        expense -> GetExpenseListResponse.builder()
+                                .id(expense.getId())
+                                .amount(expense.getAmount())
+                                .date(expense.getDate())
                                 .build()
 
                 ).toList();
