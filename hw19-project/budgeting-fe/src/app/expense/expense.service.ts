@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { CreateExpenseResponse } from './dto/create-expense-response';
 import { GetExpenseResponse } from './dto/get-expense-response';
 import { GetExpenseRequest } from './dto/get-expense-request';
+import { removeUndefined } from '../helpers/remove-undefined';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class ExpenseService {
   public getList(request?: GetExpenseRequest): Observable<GetExpenseResponse[]> {
     return this.http.get<GetExpenseResponse[]>('api/expense', {
       params: {
-        amountFrom: 10000,
+        ...(request ? removeUndefined(request) : {}),
       }
     });
   }
