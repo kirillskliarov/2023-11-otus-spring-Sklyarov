@@ -4,6 +4,11 @@ export interface ExpenseForm {
   amount: FormControl<string>;
   description: FormControl<string>;
   date: FormControl<string>;
+  categoryId: FormControl<string>;
+}
+
+export interface ExpenseCategoryForm {
+  description: FormControl<string>;
 }
 
 export type ExpenseFormValue = FormGroup<ExpenseForm>['value'];
@@ -18,6 +23,17 @@ export const getExpenseForm: () => FormGroup<ExpenseForm> = (): FormGroup<Expens
     validators: [Validators.required]
   }),
   date: new FormControl<string>('', {
+    nonNullable: true,
+    validators: [Validators.required]
+  }),
+  categoryId: new FormControl<string>('', {
+    nonNullable: true,
+    validators: [Validators.required]
+  }),
+});
+
+export const getExpenseCategoryForm: () => FormGroup<ExpenseCategoryForm> = (): FormGroup<ExpenseCategoryForm> => new FormGroup<ExpenseCategoryForm>({
+  description: new FormControl<string>('', {
     nonNullable: true,
     validators: [Validators.required]
   }),

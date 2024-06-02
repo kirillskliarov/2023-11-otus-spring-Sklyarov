@@ -27,7 +27,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "expenses")
+@Table(name = "expense-categories")
 public class ExpenseCategory {
     @Id
     @Column(name = "id")
