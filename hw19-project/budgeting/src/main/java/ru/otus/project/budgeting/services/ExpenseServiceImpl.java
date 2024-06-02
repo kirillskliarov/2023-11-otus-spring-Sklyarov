@@ -48,6 +48,11 @@ public class ExpenseServiceImpl implements ExpenseService {
                                 spec = spec.and((r, q, cb) -> cb.lessThanOrEqualTo(r.get("amount"), amountTo));
                             }
 
+                            String description = request.getDescription();
+                            if (description != null) {
+                                spec = spec.and((r, q, cb) -> cb.like(r.get("description"), description));
+                            }
+
                             Date startDate = request.getStartDate();
                             if (startDate != null) {
                                 spec = spec.and((r, q, cb) -> cb.greaterThanOrEqualTo(r.get("date"), startDate));
@@ -67,6 +72,7 @@ public class ExpenseServiceImpl implements ExpenseService {
                         expense -> GetExpenseListResponse.builder()
                                 .id(expense.getId())
                                 .amount(expense.getAmount())
+                                .description(expense.getDescription())
                                 .date(expense.getDate())
                                 .build()
 

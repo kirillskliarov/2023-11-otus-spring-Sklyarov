@@ -36,9 +36,11 @@ export class ExpenseComponent implements OnInit {
     if (this.form.valid) {
       const amount = this.baseToCoinsPipe.transform(Number(this.form.controls.amount.value));
       const date = this.toISOPipe.transform(this.form.controls.date.value);
+      const description = this.form.controls.description.value ?? '';
       const createExpenseRequest: CreateExpenseRequest = {
         amount,
         date,
+        description,
       }
 
       this.expenseService.create(createExpenseRequest).pipe(

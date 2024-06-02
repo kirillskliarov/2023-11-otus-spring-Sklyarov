@@ -9,7 +9,7 @@ import ru.otus.project.budgeting.models.dto.GetExpenseListResponse;
 import java.util.List;
 
 public interface ExpenseService {
-    CreateExpenseResponse create(Expense income);
+    CreateExpenseResponse create(Expense expense);
 
     List<GetExpenseListResponse> findByQuery(User user, GetExpenseListRequest request);
 }

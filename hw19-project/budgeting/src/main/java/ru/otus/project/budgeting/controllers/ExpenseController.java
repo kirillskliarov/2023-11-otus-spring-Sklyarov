@@ -30,6 +30,7 @@ public class ExpenseController {
         User user = (User) authentication.getPrincipal();
         Expense expense = Expense.builder()
                 .amount(createExpenseRequest.getAmount())
+                .description(createExpenseRequest.getDescription())
                 .date(createExpenseRequest.getDate())
                 .user(user)
                 .build();

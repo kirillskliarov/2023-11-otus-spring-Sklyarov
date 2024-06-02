@@ -9,6 +9,10 @@
         <input placeholder="to" [formControl]="filterForm.controls.amountTo"/>
       </th>
       <th>
+        Description<br/>
+        <input placeholder="from" [formControl]="filterForm.controls.description"/>
+      </th>
+      <th>
         Date<br/>
         <input placeholder="from" [formControl]="filterForm.controls.startDate"/>
         <input placeholder="to" [formControl]="filterForm.controls.endDate"/>
@@ -24,6 +28,7 @@
           <tr>
             <td>{{ expense.id }}</td>
             <td>{{ expense.amount | coinsToBase }}</td>
+            <td>{{ expense.description }}</td>
             <td>{{ expense.date | date }}</td>
             <td></td>
           </tr>

@@ -8,6 +8,7 @@ import java.util.Date;
 public class GetExpenseListRequest {
     private Long amountFrom;
     private Long amountTo;
+    private String description;
     private Date startDate;
     private Date endDate;
 }

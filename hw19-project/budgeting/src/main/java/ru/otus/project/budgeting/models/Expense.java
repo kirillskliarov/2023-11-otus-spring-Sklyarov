@@ -1,5 +1,6 @@
 package ru.otus.project.budgeting.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -36,10 +37,18 @@ public class Expense {
     @Column(name = "amount", nullable = false)
     private Long amount;
 
+    @Column(name = "description", nullable = false)
+    private String description;
+
     @Column(name = "date", nullable = true)
     private Date date;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "expense_category_id", referencedColumnName = "id")
+    @JsonIgnore
+    private ExpenseCategory expenseCategory;
 }

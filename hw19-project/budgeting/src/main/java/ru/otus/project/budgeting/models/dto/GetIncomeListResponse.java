@@ -14,5 +14,6 @@ import java.util.Date;
 public class GetIncomeListResponse {
     private Long id;
     private Long amount;
+    private String description;
     private Date date;
 }

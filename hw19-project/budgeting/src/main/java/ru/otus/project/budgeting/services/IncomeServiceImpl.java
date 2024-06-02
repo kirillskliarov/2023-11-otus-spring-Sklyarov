@@ -48,6 +48,11 @@ public class IncomeServiceImpl implements IncomeService {
                                 spec = spec.and((r, q, cb) -> cb.lessThanOrEqualTo(r.get("amount"), amountTo));
                             }
 
+                            String description = request.getDescription();
+                            if (description != null) {
+                                spec = spec.and((r, q, cb) -> cb.like(r.get("description"), description));
+                            }
+
                             Date startDate = request.getStartDate();
                             if (startDate != null) {
                                 spec = spec.and((r, q, cb) -> cb.greaterThanOrEqualTo(r.get("date"), startDate));
@@ -67,6 +72,7 @@ public class IncomeServiceImpl implements IncomeService {
                         income -> GetIncomeListResponse.builder()
                                 .id(income.getId())
                                 .amount(income.getAmount())
+                                .description(income.getDescription())
                                 .date(income.getDate())
                                 .build()
 

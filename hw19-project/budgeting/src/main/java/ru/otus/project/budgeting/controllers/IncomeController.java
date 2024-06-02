@@ -29,6 +29,7 @@ public class IncomeController {
         User user = (User) authentication.getPrincipal();
         Income income = Income.builder()
                 .amount(createIncomeRequest.getAmount())
+                .description(createIncomeRequest.getDescription())
                 .date(createIncomeRequest.getDate())
                 .user(user)
                 .build();
