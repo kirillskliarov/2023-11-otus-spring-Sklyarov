@@ -10,6 +10,7 @@ import ru.otus.project.budgeting.models.Income;
 import ru.otus.project.budgeting.models.User;
 import ru.otus.project.budgeting.models.dto.CreateIncomeRequest;
 import ru.otus.project.budgeting.models.dto.CreateIncomeResponse;
+import ru.otus.project.budgeting.models.dto.GetIncomeListRequest;
 import ru.otus.project.budgeting.models.dto.GetIncomeListResponse;
 import ru.otus.project.budgeting.services.IncomeService;
 
@@ -37,10 +38,10 @@ public class IncomeController {
 
     @GetMapping("/api/income")
     public List<GetIncomeListResponse> getList(
-//            @RequestBody CreateIncomeRequest createIncomeRequest,
+            GetIncomeListRequest getIncomeRequest,
             Authentication authentication
     ) {
         User user = (User) authentication.getPrincipal();
-        return incomeService.findByUser(user);
+        return incomeService.findByQuery(user, getIncomeRequest);
     }
 }

@@ -39,10 +39,10 @@ public class ExpenseController {
 
     @GetMapping("/api/expense")
     public List<GetExpenseListResponse> getList(
-            GetExpenseListRequest createExpenseRequest,
+            GetExpenseListRequest getExpenseRequest,
             Authentication authentication
     ) {
         User user = (User) authentication.getPrincipal();
-        return expenseService.findByQuery(user, createExpenseRequest);
+        return expenseService.findByQuery(user, getExpenseRequest);
     }
 }

@@ -1,6 +1,5 @@
 package ru.otus.project.budgeting.services;
 
-import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
@@ -32,19 +31,6 @@ public class ExpenseServiceImpl implements ExpenseService {
                 .id(createdIncome.getId())
                 .build();
     }
-
-    @Override
-    public List<GetExpenseListResponse> findByUser(User user) {
-        List<Expense> expenseList = expenseRepository.findByUserOrderByDateDesc(user);
-
-        return expenseList.stream().map(expense -> GetExpenseListResponse.builder()
-                .id(expense.getId())
-                .amount(expense.getAmount())
-                .date(expense.getDate())
-                .build()
-        ).toList();
-    }
-
 
     @Override
     public List<GetExpenseListResponse> findByQuery(User user, GetExpenseListRequest request) {

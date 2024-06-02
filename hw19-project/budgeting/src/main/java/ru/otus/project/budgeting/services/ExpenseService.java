@@ -11,7 +11,5 @@ import java.util.List;
 public interface ExpenseService {
     CreateExpenseResponse create(Expense income);
 
-    List<GetExpenseListResponse> findByUser(User user);
-
     List<GetExpenseListResponse> findByQuery(User user, GetExpenseListRequest request);
 }

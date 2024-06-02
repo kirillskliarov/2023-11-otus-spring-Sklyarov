@@ -1,20 +1,34 @@
-<table>
-  <thead>
-  <tr>
-    <td>ID</td>
-    <td>Amount</td>
-    <td>Date</td>
-  </tr>
-  </thead>
-  <tbody>
-    @if (incomeList$ | async; as incomeList) {
-      @for (income of incomeList; track income) {
-        <tr>
-          <td>{{ income.id }}</td>
-          <td>{{ income.amount | coinsToBase }}</td>
-          <td>{{ income.date | date }}</td>
-        </tr>
+<ng-container [formGroup]="filterForm">
+  <table>
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>
+        Amount<br/>
+        <input placeholder="from" [formControl]="filterForm.controls.amountFrom"/>
+        <input placeholder="to" [formControl]="filterForm.controls.amountTo"/>
+      </th>
+      <th>
+        Date<br/>
+        <input placeholder="from" [formControl]="filterForm.controls.startDate"/>
+        <input placeholder="to" [formControl]="filterForm.controls.endDate"/>
+      </th>
+      <th>
+        <button type="button" (click)="getList()">Apply filter</button>
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+      @if (incomeList$ | async; as incomeList) {
+        @for (income of incomeList; track income) {
+          <tr>
+            <td>{{ income.id }}</td>
+            <td>{{ income.amount | coinsToBase }}</td>
+            <td>{{ income.date | date }}</td>
+            <td></td>
+          </tr>
+        }
       }
-    }
-  </tbody>
-</table>
+    </tbody>
+  </table>
+</ng-container>
