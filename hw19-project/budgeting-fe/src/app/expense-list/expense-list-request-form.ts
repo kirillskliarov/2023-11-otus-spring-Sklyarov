@@ -8,6 +8,7 @@ export interface ExpenseListRequestForm {
   description: FormControl<string>;
   startDate: FormControl<string>;
   endDate: FormControl<string>;
+  categoryId: FormControl<string>;
 }
 
 export const getExpenseListRequestForm: () => FormGroup<ExpenseListRequestForm> = (): FormGroup<ExpenseListRequestForm> => new FormGroup<ExpenseListRequestForm>({
@@ -16,6 +17,7 @@ export const getExpenseListRequestForm: () => FormGroup<ExpenseListRequestForm> 
   description: new FormControl<string>('', { nonNullable: true }),
   startDate: new FormControl<string>('', { nonNullable: true }),
   endDate: new FormControl<string>('', { nonNullable: true }),
+  categoryId: new FormControl<string>('', { nonNullable: true }),
 });
 
 export const toGetExpenseRequest: (formValue: FormGroup<ExpenseListRequestForm>['value']) => GetExpenseRequest = (formValue: FormGroup<ExpenseListRequestForm>['value']): GetExpenseRequest => ({
@@ -24,4 +26,5 @@ export const toGetExpenseRequest: (formValue: FormGroup<ExpenseListRequestForm>[
   description: formValue.description || undefined,
   startDate: formValue.startDate || undefined,
   endDate: formValue.endDate || undefined,
+  categoryId: formValue.categoryId ? Number(formValue.categoryId) : undefined
 });

@@ -71,5 +71,5 @@
   </div>
 
 
-  <app-expense-list/>
+  <app-expense-list [expenseCategories]="(expenseCategoryList$ | async) ?? []"/>
 </div>

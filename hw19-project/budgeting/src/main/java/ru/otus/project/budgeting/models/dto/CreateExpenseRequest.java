@@ -9,4 +9,5 @@ public class CreateExpenseRequest {
     private Long amount;
     private String description;
     private Date date;
+    private Long categoryId;
 }

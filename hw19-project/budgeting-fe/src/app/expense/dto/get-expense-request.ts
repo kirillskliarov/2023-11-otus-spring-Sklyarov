@@ -4,4 +4,5 @@ export interface GetExpenseRequest {
   description?: string;
   startDate?: string;
   endDate?: string;
+  categoryId?: number;
 }

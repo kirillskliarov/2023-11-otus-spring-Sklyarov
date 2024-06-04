@@ -16,4 +16,5 @@ public class GetExpenseListResponse {
     private Long amount;
     private String description;
     private Date date;
+    private GetExpenseCategoryListResponse expenseCategory;
 }

@@ -18,6 +18,16 @@
         <input placeholder="to" [formControl]="filterForm.controls.endDate"/>
       </th>
       <th>
+        Category<br/>
+        <select [formControl]="filterForm.controls.categoryId">
+          @for (expenseCategory of expenseCategories(); track expenseCategory) {
+            <option [ngValue]="expenseCategory.id">
+              {{ expenseCategory.description }}
+            </option>
+          }
+        </select>
+      </th>
+      <th>
         <button type="button" (click)="getList()">Apply filter</button>
       </th>
     </tr>
@@ -30,6 +40,7 @@
             <td>{{ expense.amount | coinsToBase }}</td>
             <td>{{ expense.description }}</td>
             <td>{{ expense.date | date }}</td>
+            <td>{{ expense.expenseCategory.description }}</td>
             <td></td>
           </tr>
         }

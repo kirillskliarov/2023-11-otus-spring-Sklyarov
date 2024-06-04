@@ -28,14 +28,8 @@ public class ExpenseController {
             Authentication authentication
     ) {
         User user = (User) authentication.getPrincipal();
-        Expense expense = Expense.builder()
-                .amount(createExpenseRequest.getAmount())
-                .description(createExpenseRequest.getDescription())
-                .date(createExpenseRequest.getDate())
-                .user(user)
-                .build();
 
-        return expenseService.create(expense);
+        return expenseService.create(user, createExpenseRequest);
     }
 
     @GetMapping("/api/expense")

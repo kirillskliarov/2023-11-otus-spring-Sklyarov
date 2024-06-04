@@ -11,4 +11,5 @@ public class GetExpenseListRequest {
     private String description;
     private Date startDate;
     private Date endDate;
+    private Long categoryId;
 }
