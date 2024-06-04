@@ -1,35 +1,40 @@
 <div>
-  <form [formGroup]="form" (ngSubmit)="create()">
-    <div>
-      <label>
-        Amount
-        <input [formControl]="form.controls.amount">
-      </label>
+  <div class="block">
+    <div class="title">
+      Income
     </div>
+    <form [formGroup]="form" (ngSubmit)="create()">
+      <div>
+        <label>
+          Amount
+          <input [formControl]="form.controls.amount">
+        </label>
+      </div>
 
-    <div>
-      <label>
-        Description
-        <input [formControl]="form.controls.description">
-      </label>
-    </div>
+      <div>
+        <label>
+          Description
+          <input [formControl]="form.controls.description">
+        </label>
+      </div>
 
-    <div>
-      <label>
-        Date
-        <input [formControl]="form.controls.date">
-      </label>
-    </div>
+      <div>
+        <label>
+          Date
+          <input [formControl]="form.controls.date">
+        </label>
+      </div>
 
-    <div>
-      <button
-        type="submit"
-        [disabled]="form.invalid"
-      >
-        Create
-      </button>
-    </div>
-  </form>
+      <div>
+        <button
+          type="submit"
+          [disabled]="form.invalid"
+        >
+          Create
+        </button>
+      </div>
+    </form>
+  </div>
 
   <app-income-list/>
 </div>

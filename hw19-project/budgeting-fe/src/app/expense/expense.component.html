@@ -1,6 +1,6 @@
 <div>
-  <div>
-    <div>Category</div>
+  <div class="block">
+    <div class="title">Category</div>
     <form [formGroup]="expenseCategoryForm" (ngSubmit)="createExpenseCategory()">
       <div>
         <label>
@@ -21,8 +21,8 @@
 
   </div>
 
-  <div>
-    <div>
+  <div class="block">
+    <div class="title">
       Expense
     </div>
     <div>
@@ -49,13 +49,17 @@
         </div>
 
         <div>
-          <select [formControl]="form.controls.categoryId">
-            @for (expenseCategory of expenseCategoryList$ | async; track expenseCategory) {
-              <option [ngValue]="expenseCategory.id">
-                {{ expenseCategory.description }}
-              </option>
-            }
-          </select>
+          <label>
+            Category
+            <select [formControl]="form.controls.categoryId">
+              @for (expenseCategory of expenseCategoryList$ | async; track expenseCategory) {
+                <option [ngValue]="expenseCategory.id">
+                  {{ expenseCategory.description }}
+                </option>
+              }
+            </select>
+          </label>
+
         </div>
 
         <div>
