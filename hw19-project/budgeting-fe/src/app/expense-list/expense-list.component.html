@@ -1,0 +1,50 @@
+<ng-container [formGroup]="filterForm">
+  <table>
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>
+        Amount<br/>
+        <input placeholder="from" [formControl]="filterForm.controls.amountFrom"/>
+        <input placeholder="to" [formControl]="filterForm.controls.amountTo"/>
+      </th>
+      <th>
+        Description<br/>
+        <input placeholder="from" [formControl]="filterForm.controls.description"/>
+      </th>
+      <th>
+        Date<br/>
+        <input placeholder="from" [formControl]="filterForm.controls.startDate"/>
+        <input placeholder="to" [formControl]="filterForm.controls.endDate"/>
+      </th>
+      <th>
+        Category<br/>
+        <select [formControl]="filterForm.controls.categoryId">
+          @for (expenseCategory of expenseCategories(); track expenseCategory) {
+            <option [ngValue]="expenseCategory.id">
+              {{ expenseCategory.description }}
+            </option>
+          }
+        </select>
+      </th>
+      <th>
+        <button type="button" (click)="getList()">Apply filter</button>
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+      @if (expenseList$ | async; as expenseList) {
+        @for (expense of expenseList; track expense) {
+          <tr>
+            <td>{{ expense.id }}</td>
+            <td>{{ expense.amount | coinsToBase }}</td>
+            <td>{{ expense.description }}</td>
+            <td>{{ expense.date | date }}</td>
+            <td>{{ expense.expenseCategory.description }}</td>
+            <td></td>
+          </tr>
+        }
+      }
+    </tbody>
+  </table>
+</ng-container>
